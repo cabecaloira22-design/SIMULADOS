@@ -446,7 +446,7 @@ function act(a,v,el){const s=S.session;
   case 'redraw':{const aulas=new Set(s.qids.map(id=>QMAP[id].aula));const pool=ALLQ.filter(id=>aulas.has(QMAP[id].aula));
     newSession({modo:s.modo,qids:pool,label:'Novo sorteio · '+aulas.size+' aula(s)',shuffle:true});break;}
   case 'csvcopy':{const t=csv(s);if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(()=>say('CSV copiado.'),()=>{csvShown=true;render();say('Não foi possível copiar; o texto está na caixa abaixo.');});}else{csvShown=true;render();}break;}
-  case 'csvdl':{try{const b=new Blob(['﻿'+csv(s)],{type:'text/csv'});const u=URL.createObjectURL(b);const l=document.createElement('a');l.href=u;l.download='resultado-simulado-hamped.csv';document.body.appendChild(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),2000);}catch(e){}
+  case 'csvdl':{try{const b=new Blob(['﻿'+csv(s)],{type:'text/csv'});const u=URL.createObjectURL(b);const l=document.createElement('a');l.href=u;l.download='resultado-simulado-ham-adulto.csv';document.body.appendChild(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),2000);}catch(e){}
     csvShown=true;render();say('Se o download não começou, copie o texto exibido.');break;}
   case 'csvshow':csvShown=!csvShown;render();break;
   case 'rotfig':figRot[v]=!figRot[v];el.textContent=figRot[v]?'Ver girada para leitura':'Ver na orientação original';drawFigs();break;
