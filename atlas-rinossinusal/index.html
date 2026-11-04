@@ -1,0 +1,1051 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Atlas Rinossinusal</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: atlas clínico. Pranchas escuras tipo negatoscópio (fixas nos dois temas) ao lado de painéis de leitura claros. */
+:root{
+  --bg:#EDF1F4; --surface:#FFFFFF; --ink:#18212B; --muted:#5A6674; --line:#D2DAE1;
+  --accent:#B83A54; --accent-soft:#F6DDE3; --warn:#B7791F; --ok:#2F7D62; --danger:#B42335;
+  --plate:#0D1319; --plate-ink:#DCE5EC; --plate-muted:#7F8D9A; --plate-line:#24303B;
+  --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F151B; --surface:#161F28; --ink:#E4EBF1; --muted:#97A5B2; --line:#283542;
+  --accent:#E46C85; --accent-soft:#3A1E27; --warn:#E0A84A; --ok:#5BBE97; --danger:#F06A7A; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F151B; --surface:#161F28; --ink:#E4EBF1; --muted:#97A5B2; --line:#283542;
+  --accent:#E46C85; --accent-soft:#3A1E27; --warn:#E0A84A; --ok:#5BBE97; --danger:#F06A7A; color-scheme:dark}
+
+*{box-sizing:border-box}
+html{color-scheme:light}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0}
+[hidden]{display:none!important}
+img{max-width:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
+.wrap{max-width:1140px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);line-height:1.1;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.4rem,6vw,4.4rem);font-weight:800;letter-spacing:-.02em}
+h2{font-size:clamp(1.6rem,3.4vw,2.3rem);font-weight:700;letter-spacing:-.01em}
+h3{font-size:1.15rem;font-weight:700}
+p{margin:0}
+.eyebrow{font-family:var(--f-mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.lede{color:var(--muted);max-width:62ch}
+header.hero{padding-block:40px 20px;display:grid;gap:14px}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.toc a{font-family:var(--f-mono);font-size:.78rem;color:var(--ink);text-decoration:none;border:1px solid var(--line);padding:5px 10px;border-radius:999px;background:var(--surface)}
+.toc a:hover,.toc a:focus-visible{border-color:var(--accent);color:var(--accent)}
+section{padding-block:44px 8px;border-top:1px solid var(--line);margin-top:36px;display:grid;gap:20px}
+section:first-of-type{border-top:0;margin-top:0;padding-top:8px}
+.sec-head{display:grid;gap:8px}
+.grid2{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:22px;align-items:start}
+@media (max-width:860px){.grid2{grid-template-columns:minmax(0,1fr)}}
+.plate{background:var(--plate);border-radius:14px;padding:14px;color:var(--plate-ink);position:relative;overflow:hidden}
+.plate svg{display:block;width:100%;height:auto}
+.plate-cap{font-family:var(--f-mono);font-size:.72rem;color:var(--plate-muted);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:4px 4px 0}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;display:grid;gap:14px;min-width:0}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button,.chip{font-family:var(--f-mono);font-size:.8rem;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:7px 12px;border-radius:8px;cursor:pointer}
+.seg button[aria-pressed="true"],.chip[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.plate .seg button{background:transparent;color:var(--plate-ink);border-color:var(--plate-line)}
+.plate .seg button[aria-pressed="true"]{background:var(--plate-ink);color:var(--plate);border-color:var(--plate-ink)}
+button:focus-visible,[tabindex]:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.k{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.big{font-family:var(--f-display);font-size:1.5rem;font-weight:700;line-height:1.15}
+.note{font-size:.92rem;color:var(--muted)}
+.tag{display:inline-block;font-family:var(--f-mono);font-size:.72rem;padding:2px 8px;border-radius:6px;background:var(--accent-soft);color:var(--accent)}
+.key{border-left:3px solid var(--accent);padding-left:12px}
+ul.clean{margin:0;padding-left:1.1em;display:grid;gap:4px}
+.alarm{background:var(--accent-soft);border-radius:10px;padding:12px 14px;font-size:.95rem}
+
+/* ---------- Anatomia ---------- */
+#anat .hit{cursor:pointer;outline:none}
+#anat .hit:hover .rim,#anat .hit:focus-visible .rim,#anat .hit.sel .rim{stroke:#FFD36E;stroke-width:2.5}
+#anat .hit.sel .glow{opacity:.55}
+#anat .glow{opacity:0;transition:opacity .3s}
+#anat .rim{fill:none;stroke:#8E7F66;stroke-width:1.2;transition:stroke .2s}
+#anat .air{fill:url(#gAir)}
+#anat .lining{fill:none;stroke:url(#gMucN);stroke-width:4;transition:stroke-width .7s ease}
+#anat .muc{fill:url(#gMucN);transition:transform .7s ease}
+#anat .turb{transform-box:fill-box;transform-origin:30% 50%;transition:transform .7s ease}
+#anat .turb.r{transform-origin:70% 50%}
+#anat .fluid{transform-box:fill-box;transform-origin:50% 100%;transform:scaleY(0);transition:transform .9s ease}
+#anat .polyp,#anat .pus,#anat .hyal,#anat .meniscus{opacity:0;transition:opacity .6s}
+#anat[data-state="alergica"] .muc{fill:url(#gMucA)}
+#anat[data-state="alergica"] .lining{stroke:url(#gMucA)}
+#anat[data-state="alergica"] .turb{transform:scale(1.35)}
+#anat[data-state="alergica"] .hyal{opacity:1}
+#anat[data-state="aguda"] .muc{fill:url(#gMucR)}
+#anat[data-state="aguda"] .lining{stroke:url(#gMucR);stroke-width:12}
+#anat[data-state="aguda"] .turb{transform:scale(1.2)}
+#anat[data-state="aguda"] .fluid.lv{transform:scaleY(1)}
+#anat[data-state="aguda"] .pus,#anat[data-state="aguda"] .meniscus{opacity:1}
+#anat[data-state="cronica"] .muc{fill:url(#gMucN)}
+#anat[data-state="cronica"] .lining{stroke:url(#gMucP);stroke-width:30}
+#anat[data-state="cronica"] .eth .lining{stroke-width:60}
+#anat[data-state="cronica"] .turb{transform:scale(1.1)}
+#anat[data-state="cronica"] .polyp{opacity:1}
+#anat .lbl text{font-family:var(--f-mono);font-size:12px;fill:var(--plate-ink)}
+#anat .lbl line{stroke:var(--plate-muted);stroke-width:.8}
+#anat.nolabels .lbl{display:none}
+.statecard{display:grid;gap:6px}
+
+/* ---------- Rinoscopia ---------- */
+#scope .muc{transition:transform .7s ease}
+#scope .ti{transform-box:fill-box;transform-origin:70% 60%;transition:transform .7s ease}
+#scope .layer{opacity:0;transition:opacity .6s}
+#scope[data-s="normal"] .muc{fill:url(#sN)}
+#scope[data-s="alergica"] .muc{fill:url(#sA)} #scope[data-s="alergica"] .ti{transform:scale(1.18)} #scope[data-s="alergica"] .hyal{opacity:1}
+#scope[data-s="viral"] .muc{fill:url(#sV)} #scope[data-s="viral"] .ti{transform:scale(1.1)} #scope[data-s="viral"] .hyal{opacity:.7}
+#scope[data-s="bacteriana"] .muc{fill:url(#sV)} #scope[data-s="bacteriana"] .ti{transform:scale(1.12)} #scope[data-s="bacteriana"] .pus{opacity:1}
+#scope[data-s="medicamentosa"] .muc{fill:url(#sM)} #scope[data-s="medicamentosa"] .ti{transform:scale(1.26)}
+#scope[data-s="polipose"] .muc{fill:url(#sA)} #scope[data-s="polipose"] .polyp{opacity:1}
+#scope[data-s="fungica"] .muc{fill:url(#sF)} #scope[data-s="fungica"] .eschar{opacity:1}
+
+/* ---------- Fácies ---------- */
+#facies .sign{opacity:0;transition:opacity .5s}
+#facies .sign.on{opacity:1}
+#facies .mouth-closed{transition:opacity .5s}
+#facies.oral .mouth-closed{opacity:0}
+.signlist{display:grid;gap:8px}
+.signlist button{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;text-align:left;font:inherit;font-size:.95rem;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;color:var(--ink);cursor:pointer}
+.signlist button .n{font-family:var(--f-mono);font-size:.8rem;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line)}
+.signlist button[aria-pressed="true"]{border-color:var(--accent)}
+.signlist button[aria-pressed="true"] .n{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.signlist b{font-family:var(--f-display);font-weight:700}
+
+/* ---------- Sintomas ---------- */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips .chip{font-family:var(--f-body);font-size:.92rem;border-radius:999px}
+.bars{display:grid;gap:12px}
+.bar{display:grid;gap:4px}
+.bar .row{display:flex;justify-content:space-between;gap:8px;font-size:.95rem}
+.bar .row span:last-child{font-family:var(--f-mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.track{height:12px;background:var(--bg);border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+.fill{height:100%;background:var(--muted);border-radius:6px;transition:width .5s ease}
+.bar.top .fill{background:var(--accent)}
+.bar.top .row span:first-child{font-weight:600}
+
+/* ---------- ARIA ---------- */
+fieldset{border:0;padding:0;margin:0;display:grid;gap:8px}
+legend{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.opt{display:flex;gap:10px;align-items:flex-start;font-size:.95rem;cursor:pointer}
+.opt input{margin-top:5px;accent-color:var(--accent)}
+.matrix{display:grid;grid-template-columns:auto 1fr 1fr;border:1px solid var(--line);border-radius:10px;overflow:hidden;font-size:.86rem}
+.matrix div{padding:8px 10px;border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.matrix .h{font-family:var(--f-mono);font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);background:var(--bg);border-top:0}
+.matrix div:nth-child(3n+1){border-left:0}
+.matrix .on{background:var(--accent-soft);outline:2px solid var(--accent);outline-offset:-2px}
+.ladder{display:grid;gap:6px;counter-reset:s}
+.ladder li{list-style:none;padding:8px 12px;border-radius:8px;border:1px solid var(--line);font-size:.93rem}
+.ladder li.hl{border-color:var(--accent);background:var(--accent-soft)}
+.ladder{padding:0;margin:0}
+
+/* ---------- Timeline ---------- */
+#tl text{font-family:var(--f-mono);font-size:11px;fill:var(--plate-muted)}
+#tl .curve{fill:none;stroke:#FF8FA3;stroke-width:3;stroke-linecap:round}
+#tl .area{fill:url(#tlArea)}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.dayrow{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-family:var(--f-mono);font-size:.8rem;color:var(--plate-muted)}
+.dayrow b{font-family:var(--f-display);font-size:1.6rem;color:var(--plate-ink)}
+
+/* ---------- Chandler ---------- */
+#orb .st{opacity:0;transition:opacity .6s}
+#orb .globe{transition:transform .8s ease}
+#orb[data-st="3"] .globe{transform:translate(14px,-10px)}
+#orb[data-st="4"] .globe{transform:translate(4px,-20px)}
+#orb[data-st="2"] .globe{transform:translate(0,-8px)}
+#orb[data-st="5"] .globe{transform:translate(0,-14px)}
+#orb text{font-family:var(--f-mono);font-size:11px;fill:var(--plate-muted)}
+.stepper{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.stepper button{font-family:var(--f-mono);font-size:.74rem;padding:8px 4px;border-radius:8px;border:1px solid var(--plate-line);background:transparent;color:var(--plate-ink);cursor:pointer;line-height:1.25}
+.stepper button b{display:block;font-family:var(--f-display);font-size:1.2rem}
+.stepper button[aria-pressed="true"]{background:#B42335;border-color:#B42335;color:#fff}
+.flags{display:flex;flex-wrap:wrap;gap:6px}
+.flag{font-family:var(--f-mono);font-size:.74rem;padding:3px 8px;border-radius:6px;border:1px solid var(--line);color:var(--muted)}
+.flag.on{border-color:var(--danger);color:var(--danger);background:var(--accent-soft)}
+
+/* ---------- Crônica ---------- */
+.cmp{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px}
+.cmp .panel h3{font-size:1.2rem}
+dl.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0;font-size:.94rem}
+dl.kv dt{font-family:var(--f-mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding-top:3px}
+dl.kv dd{margin:0}
+
+/* ---------- Casos ---------- */
+.cases{display:grid;gap:16px}
+.case{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;display:grid;gap:12px}
+.case .stem{max-width:70ch}
+.answers{display:grid;gap:8px}
+.answers button{text-align:left;font:inherit;font-size:.95rem;padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer;display:grid;grid-template-columns:24px 1fr;gap:8px}
+.answers button .l{font-family:var(--f-mono);color:var(--muted)}
+.answers button.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,var(--surface))}
+.answers button.wrong{border-color:var(--danger);background:color-mix(in srgb,var(--danger) 12%,var(--surface))}
+.answers button:disabled{cursor:default}
+.expl{font-size:.94rem;border-left:3px solid var(--ok);padding-left:12px}
+.score{font-family:var(--f-mono);font-size:.85rem;color:var(--muted)}
+
+/* ---------- Pegadinhas ---------- */
+.traps{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:12px}
+details{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+details summary{cursor:pointer;font-family:var(--f-display);font-weight:700;font-size:1.02rem;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary::after{content:"+";float:right;font-family:var(--f-mono);color:var(--accent)}
+details[open] summary::after{content:"–"}
+details p{margin-top:8px;font-size:.95rem;color:var(--muted)}
+footer{margin-top:40px;border-top:1px solid var(--line);padding-top:20px;font-size:.88rem;color:var(--muted);display:grid;gap:8px}
+footer ol{margin:0;padding-left:1.2em;display:grid;gap:4px}
+.toggle{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:.74rem;color:var(--plate-muted);cursor:pointer}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+<header class="hero">
+  <span class="eyebrow">Otorrino · ENAMED / Residência</span>
+  <h1>Rinite e rinossinusite</h1>
+  <p class="lede">Atlas interativo. Mude o estado da mucosa, olhe pela rinoscopia, monte a classificação ARIA, acompanhe a curva da rinossinusite aguda dia a dia e veja as complicações orbitárias evoluírem estágio por estágio.</p>
+  <nav class="toc" aria-label="Seções">
+    <a href="#anatomia">Anatomia</a><a href="#sintomas">Sintomas</a><a href="#rinoscopia">Rinoscopia</a><a href="#facies">Fácies alérgica</a><a href="#aria">ARIA e conduta</a><a href="#aguda">Rinossinusite aguda</a><a href="#chandler">Chandler</a><a href="#cronica">Crônica</a><a href="#casos">Casos</a><a href="#pegadinhas">Pegadinhas</a>
+  </nav>
+</header>
+
+<!-- ================= ANATOMIA ================= -->
+<section id="anatomia">
+  <div class="sec-head">
+    <span class="eyebrow">01 · Anatomia funcional</span>
+    <h2>Os seios e o meato médio</h2>
+    <p class="lede">Clique em cada estrutura. Depois troque o estado da mucosa e veja o que acontece com conchas, seios e secreção.</p>
+  </div>
+  <div class="grid2">
+    <div class="plate">
+      <div class="seg" role="group" aria-label="Estado da mucosa" id="anatSeg" style="margin-bottom:10px">
+        <button data-v="normal" aria-pressed="true">Normal</button>
+        <button data-v="alergica" aria-pressed="false">Rinite alérgica</button>
+        <button data-v="aguda" aria-pressed="false">Rinossinusite aguda</button>
+        <button data-v="cronica" aria-pressed="false">Crônica com pólipos</button>
+      </div>
+      <svg id="anat" viewBox="0 0 640 540" data-state="normal" role="img" aria-label="Vista frontal esquemática dos seios paranasais e da cavidade nasal">
+        <defs>
+          <radialGradient id="gBone" cx="50%" cy="38%" r="70%"><stop offset="0" stop-color="#F3EBDD"/><stop offset=".55" stop-color="#DACDB4"/><stop offset="1" stop-color="#9E8E72"/></radialGradient>
+          <radialGradient id="gAir" cx="45%" cy="40%" r="70%"><stop offset="0" stop-color="#05080B"/><stop offset="1" stop-color="#1A242E"/></radialGradient>
+          <radialGradient id="gOrbit" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#06090C"/><stop offset=".8" stop-color="#151D26"/><stop offset="1" stop-color="#3A3328"/></radialGradient>
+          <linearGradient id="gMucN" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F3AAB4"/><stop offset="1" stop-color="#C45A6B"/></linearGradient>
+          <linearGradient id="gMucA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EEF1F8"/><stop offset="1" stop-color="#9EAACB"/></linearGradient>
+          <linearGradient id="gMucR" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF6F7F"/><stop offset="1" stop-color="#9E1229"/></linearGradient>
+          <linearGradient id="gMucP" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E9C9CD"/><stop offset="1" stop-color="#B98A92"/></linearGradient>
+          <linearGradient id="gFluid" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F2D46A"/><stop offset=".08" stop-color="#D9B13E"/><stop offset="1" stop-color="#8F6E1C"/></linearGradient>
+          <radialGradient id="gPolyp" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#FAFAF6"/><stop offset=".6" stop-color="#C8CCC9"/><stop offset="1" stop-color="#8E9493"/></radialGradient>
+          <radialGradient id="gGlow"><stop offset="0" stop-color="#FFD36E" stop-opacity=".9"/><stop offset="1" stop-color="#FFD36E" stop-opacity="0"/></radialGradient>
+          <filter id="tex" x="0" y="0" width="100%" height="100%">
+            <feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="3" seed="7" result="n"/>
+            <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .28 0" result="d"/>
+            <feComposite in="d" in2="SourceGraphic" operator="in" result="s"/>
+            <feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="s"/></feMerge>
+          </filter>
+          <filter id="soft"><feGaussianBlur stdDeviation="1.2"/></filter>
+          <path id="pFrL" d="M258,175 C240,178 205,170 200,150 C196,130 215,110 235,115 C250,118 258,135 258,175 Z"/>
+          <path id="pFrR" d="M262,175 C280,178 315,170 320,150 C324,130 305,110 285,115 C270,118 262,135 262,175 Z"/>
+          <path id="pEtL" d="M241,192 L257,192 L257,280 L235,280 C232,248 234,218 241,192 Z"/>
+          <path id="pEtR" d="M279,192 L263,192 L263,280 L285,280 C288,248 286,218 279,192 Z"/>
+          <path id="pMxL" d="M212,300 C180,288 132,295 120,332 C111,372 132,420 166,436 C190,446 206,432 212,415 Z"/>
+          <path id="pMxR" d="M308,300 C340,288 388,295 400,332 C409,372 388,420 354,436 C330,446 314,432 308,415 Z"/>
+          <clipPath id="cFrL"><use href="#pFrL"/></clipPath><clipPath id="cFrR"><use href="#pFrR"/></clipPath>
+          <clipPath id="cEtL"><use href="#pEtL"/></clipPath><clipPath id="cEtR"><use href="#pEtR"/></clipPath>
+          <clipPath id="cMxL"><use href="#pMxL"/></clipPath><clipPath id="cMxR"><use href="#pMxR"/></clipPath>
+          <clipPath id="cNas"><path d="M260,282 C245,282 228,300 220,332 C211,372 205,410 210,442 L310,442 C315,410 309,372 300,332 C292,300 275,282 260,282 Z"/></clipPath>
+        </defs>
+
+        <g transform="translate(60,0)">
+          <!-- crânio -->
+          <path d="M260,30 C140,30 70,110 70,220 C70,270 80,300 95,330 C100,370 120,420 150,455 C180,490 220,506 260,506 C300,506 340,490 370,455 C400,420 420,370 425,330 C440,300 450,270 450,220 C450,110 380,30 260,30 Z" fill="url(#gBone)" filter="url(#tex)"/>
+          <path d="M100,240 C120,215 150,205 175,210 M420,240 C400,215 370,205 345,210" stroke="#A6957A" stroke-width="2" fill="none" opacity=".6"/>
+          <!-- dentes -->
+          <g fill="#F7F2E8" stroke="#B9AA90" stroke-width="1">
+            <rect x="196" y="458" width="15" height="26" rx="5"/><rect x="213" y="461" width="14" height="27" rx="5"/><rect x="229" y="463" width="14" height="28" rx="5"/><rect x="245" y="464" width="14" height="29" rx="5"/>
+            <rect x="261" y="464" width="14" height="29" rx="5"/><rect x="277" y="463" width="14" height="28" rx="5"/><rect x="293" y="461" width="14" height="27" rx="5"/><rect x="309" y="458" width="15" height="26" rx="5"/>
+            <rect x="172" y="452" width="22" height="24" rx="6"/><rect x="326" y="452" width="22" height="24" rx="6"/>
+          </g>
+
+          <!-- órbitas -->
+          <g class="hit" data-key="orbita" tabindex="0" role="button" aria-label="Órbita e lâmina papirácea">
+            <ellipse class="glow" cx="180" cy="230" rx="70" ry="62" fill="url(#gGlow)"/>
+            <ellipse cx="180" cy="230" rx="55" ry="48" fill="url(#gOrbit)"/>
+            <ellipse cx="340" cy="230" rx="55" ry="48" fill="url(#gOrbit)"/>
+            <ellipse class="rim" cx="180" cy="230" rx="55" ry="48"/><ellipse class="rim" cx="340" cy="230" rx="55" ry="48"/>
+            <circle cx="186" cy="248" r="3" fill="#3B4652"/><circle cx="334" cy="248" r="3" fill="#3B4652"/>
+          </g>
+
+          <!-- frontal -->
+          <g class="hit" data-key="frontal" tabindex="0" role="button" aria-label="Seio frontal">
+            <ellipse class="glow" cx="260" cy="145" rx="80" ry="45" fill="url(#gGlow)"/>
+            <use href="#pFrL" class="air"/><use href="#pFrR" class="air"/>
+            <g clip-path="url(#cFrL)"><use href="#pFrL" class="lining"/></g>
+            <g clip-path="url(#cFrR)"><use href="#pFrR" class="lining"/></g>
+            <use href="#pFrL" class="rim"/><use href="#pFrR" class="rim"/>
+          </g>
+
+          <!-- esfenoide (posterior, projeção) -->
+          <g class="hit" data-key="esfenoide" tabindex="0" role="button" aria-label="Seio esfenoidal">
+            <ellipse class="glow" cx="260" cy="190" rx="44" ry="20" fill="url(#gGlow)"/>
+            <ellipse cx="260" cy="188" rx="30" ry="11" fill="#2A333D" opacity=".75"/>
+            <ellipse class="rim" cx="260" cy="188" rx="30" ry="11" stroke-dasharray="4 3"/>
+          </g>
+
+          <!-- etmoide -->
+          <g class="hit eth" data-key="etmoide" tabindex="0" role="button" aria-label="Células etmoidais">
+            <rect class="glow" x="222" y="186" width="76" height="102" rx="20" fill="url(#gGlow)"/>
+            <use href="#pEtL" class="air"/><use href="#pEtR" class="air"/>
+            <g clip-path="url(#cEtL)"><use href="#pEtL" class="lining"/>
+              <g fill="none" stroke="#B9A98C" stroke-width="1.6"><circle cx="246" cy="203" r="8"/><circle cx="252" cy="220" r="8"/><circle cx="243" cy="236" r="8"/><circle cx="251" cy="252" r="8"/><circle cx="242" cy="268" r="8"/><circle cx="252" cy="275" r="6"/></g></g>
+            <g clip-path="url(#cEtR)"><use href="#pEtR" class="lining"/>
+              <g fill="none" stroke="#B9A98C" stroke-width="1.6"><circle cx="274" cy="203" r="8"/><circle cx="268" cy="220" r="8"/><circle cx="277" cy="236" r="8"/><circle cx="269" cy="252" r="8"/><circle cx="278" cy="268" r="8"/><circle cx="268" cy="275" r="6"/></g></g>
+            <use href="#pEtL" class="rim"/><use href="#pEtR" class="rim"/>
+          </g>
+
+          <!-- maxilares -->
+          <g class="hit" data-key="maxilar" tabindex="0" role="button" aria-label="Seio maxilar">
+            <ellipse class="glow" cx="165" cy="368" rx="62" ry="80" fill="url(#gGlow)"/><ellipse class="glow" cx="355" cy="368" rx="62" ry="80" fill="url(#gGlow)"/>
+            <use href="#pMxL" class="air"/><use href="#pMxR" class="air"/>
+            <g clip-path="url(#cMxL)"><rect class="fluid lv" x="100" y="392" width="120" height="60" fill="url(#gFluid)"/><line class="meniscus" x1="100" y1="392.5" x2="220" y2="392.5" stroke="#FFF1B0" stroke-width="1.5"/><use href="#pMxL" class="lining"/></g>
+            <g clip-path="url(#cMxR)"><rect class="fluid lv" x="300" y="410" width="120" height="40" fill="url(#gFluid)"/><line class="meniscus" x1="300" y1="410.5" x2="420" y2="410.5" stroke="#FFF1B0" stroke-width="1.5"/><use href="#pMxR" class="lining"/></g>
+            <use href="#pMxL" class="rim"/><use href="#pMxR" class="rim"/>
+          </g>
+
+          <!-- cavidade nasal -->
+          <path d="M260,282 C245,282 228,300 220,332 C211,372 205,410 210,442 L310,442 C315,410 309,372 300,332 C292,300 275,282 260,282 Z" fill="url(#gAir)"/>
+          <g clip-path="url(#cNas)">
+            <g class="hit" data-key="septo" tabindex="0" role="button" aria-label="Septo nasal">
+              <rect class="glow" x="246" y="282" width="28" height="160" fill="url(#gGlow)"/>
+              <path class="muc" d="M255,282 L265,282 C267,340 266,400 266,442 L254,442 C254,400 253,340 255,282 Z" filter="url(#tex)"/>
+              <path class="rim" d="M255,282 L265,282 C267,340 266,400 266,442 L254,442 C254,400 253,340 255,282 Z" stroke-width=".6"/>
+            </g>
+            <g class="hit" data-key="conchaSup" tabindex="0" role="button" aria-label="Concha superior">
+              <ellipse class="glow" cx="260" cy="312" rx="40" ry="14" fill="url(#gGlow)"/>
+              <path class="muc turb" d="M228,304 C236,300 248,306 247,316 C246,324 236,324 232,318 C228,314 226,309 228,304 Z" filter="url(#tex)"/>
+              <path class="muc turb r" d="M292,304 C284,300 272,306 273,316 C274,324 284,324 288,318 C292,314 294,309 292,304 Z" filter="url(#tex)"/>
+            </g>
+            <g class="hit" data-key="conchaMed" tabindex="0" role="button" aria-label="Concha média e meato médio">
+              <ellipse class="glow" cx="260" cy="356" rx="56" ry="20" fill="url(#gGlow)"/>
+              <path class="muc turb" d="M220,340 C232,334 250,344 250,358 C250,372 236,376 228,370 C222,364 226,356 219,352 Z" filter="url(#tex)"/>
+              <path class="muc turb r" d="M300,340 C288,334 270,344 270,358 C270,372 284,376 292,370 C298,364 294,356 301,352 Z" filter="url(#tex)"/>
+            </g>
+            <g class="hit" data-key="conchaInf" tabindex="0" role="button" aria-label="Concha inferior">
+              <ellipse class="glow" cx="260" cy="410" rx="62" ry="22" fill="url(#gGlow)"/>
+              <path class="muc turb" d="M212,394 C228,386 252,394 252,410 C252,426 232,430 220,424 C212,420 214,410 208,406 Z" filter="url(#tex)"/>
+              <path class="muc turb r" d="M308,394 C292,386 268,394 268,410 C268,426 288,430 300,424 C308,420 306,410 312,406 Z" filter="url(#tex)"/>
+            </g>
+            <!-- secreções -->
+            <g class="pus" stroke="#D9B640" stroke-linecap="round" fill="none">
+              <path d="M236,374 C234,386 238,394 235,406" stroke-width="4"/><path d="M284,374 C286,388 282,396 285,404" stroke-width="3.5"/>
+              <path d="M240,430 C236,436 238,440 236,442" stroke-width="5"/>
+            </g>
+            <g class="hyal" fill="#DDEBFF" opacity=".9">
+              <circle cx="238" cy="438" r="3"/><circle cx="282" cy="436" r="2.6"/><path d="M246,428 C245,433 247,436 246,440" stroke="#DDEBFF" stroke-width="2" fill="none"/>
+            </g>
+            <!-- pólipos no meato médio -->
+            <g class="polyp" fill="url(#gPolyp)" stroke="#7C8483" stroke-width=".6">
+              <circle cx="232" cy="382" r="9"/><circle cx="242" cy="390" r="8"/><circle cx="228" cy="394" r="7"/><circle cx="246" cy="378" r="6"/>
+              <circle cx="288" cy="382" r="9"/><circle cx="278" cy="391" r="8"/><circle cx="292" cy="394" r="7"/><circle cx="274" cy="378" r="6"/>
+            </g>
+          </g>
+        </g>
+
+        <!-- rótulos -->
+        <g class="lbl">
+          <line x1="124" y1="132" x2="290" y2="146"/><text x="120" y="136" text-anchor="end">Seio frontal</text>
+          <line x1="124" y1="232" x2="190" y2="232"/><text x="120" y="236" text-anchor="end">Órbita</text>
+          <line x1="124" y1="372" x2="222" y2="372"/><text x="120" y="376" text-anchor="end">Seio maxilar</text>
+          <line x1="124" y1="452" x2="282" y2="412"/><text x="120" y="456" text-anchor="end">Concha inferior</text>
+          <line x1="516" y1="120" x2="350" y2="186"/><text x="520" y="124">Esfenoide</text><text x="520" y="138" style="font-size:10px;fill:#7F8D9A">(posterior)</text>
+          <line x1="516" y1="176" x2="336" y2="214"/><text x="520" y="180">Etmoide</text>
+          <line x1="516" y1="350" x2="350" y2="356"/><text x="520" y="354">Concha média</text>
+          <line x1="516" y1="310" x2="345" y2="312"/><text x="520" y="314">Concha sup.</text>
+          <line x1="516" y1="468" x2="324" y2="430"/><text x="520" y="472">Septo</text>
+        </g>
+      </svg>
+      <div class="plate-cap"><span>Vista frontal esquemática, seios projetados</span><label class="toggle"><input type="checkbox" id="lblToggle" checked> rótulos</label></div>
+    </div>
+
+    <div class="panel" aria-live="polite">
+      <div class="statecard">
+        <span class="k">Estado da mucosa</span>
+        <div class="big" id="stTitle">Normal</div>
+        <p id="stText"></p>
+      </div>
+      <hr style="border:0;border-top:1px solid var(--line);margin:0">
+      <div class="statecard">
+        <span class="k">Estrutura selecionada</span>
+        <div class="big" id="inTitle">Meato médio</div>
+        <p id="inText"></p>
+        <p class="key" id="inExam"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SINTOMAS ================= -->
+<section id="sintomas">
+  <div class="sec-head">
+    <span class="eyebrow">02 · Sintomatologia</span>
+    <h2>Monte o quadro e veja para onde ele aponta</h2>
+    <p class="lede">Marque os achados. As barras mostram qual padrão clínico os sintomas sustentam. É um treino de raciocínio, não um escore validado.</p>
+  </div>
+  <div class="grid2">
+    <div class="panel">
+      <span class="k">Achados</span>
+      <div class="chips" id="symChips"></div>
+      <button class="chip" id="symClear" style="justify-self:start">Limpar</button>
+    </div>
+    <div class="panel" aria-live="polite">
+      <span class="k">Padrão mais compatível</span>
+      <div class="big" id="symTop"></div>
+      <div class="bars" id="symBars"></div>
+      <p class="key" id="symWhy"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RINOSCOPIA ================= -->
+<section id="rinoscopia">
+  <div class="sec-head">
+    <span class="eyebrow">03 · Exame físico</span>
+    <h2>Rinoscopia anterior</h2>
+    <p class="lede">Visão pelo espéculo da fossa nasal direita: septo à esquerda, conchas à direita. A cor da mucosa e o que está no meato contam a história.</p>
+  </div>
+  <div class="grid2">
+    <div class="plate">
+      <div class="seg" role="group" aria-label="Achado" id="scopeSeg" style="margin-bottom:10px">
+        <button data-v="normal" aria-pressed="false">Normal</button>
+        <button data-v="alergica" aria-pressed="true">Alérgica</button>
+        <button data-v="viral" aria-pressed="false">Resfriado</button>
+        <button data-v="bacteriana" aria-pressed="false">Bacteriana</button>
+        <button data-v="medicamentosa" aria-pressed="false">Medicamentosa</button>
+        <button data-v="polipose" aria-pressed="false">Polipose</button>
+        <button data-v="fungica" aria-pressed="false">Fúngica invasiva</button>
+      </div>
+      <svg id="scope" viewBox="0 0 400 400" data-s="alergica" role="img" aria-label="Rinoscopia anterior ilustrada">
+        <defs>
+          <radialGradient id="sDeep" cx="58%" cy="42%" r="60%"><stop offset="0" stop-color="#050203"/><stop offset=".55" stop-color="#2B0D12"/><stop offset="1" stop-color="#5A1E26"/></radialGradient>
+          <radialGradient id="sN" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="#F7B7BF"/><stop offset=".6" stop-color="#D9707F"/><stop offset="1" stop-color="#8A2F3D"/></radialGradient>
+          <radialGradient id="sA" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="#F4F6FB"/><stop offset=".55" stop-color="#C4CBE0"/><stop offset="1" stop-color="#7C86A6"/></radialGradient>
+          <radialGradient id="sV" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="#FF8D99"/><stop offset=".55" stop-color="#D62F48"/><stop offset="1" stop-color="#7A0E1E"/></radialGradient>
+          <radialGradient id="sM" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="#FF6A73"/><stop offset=".5" stop-color="#C0182F"/><stop offset="1" stop-color="#5C0614"/></radialGradient>
+          <radialGradient id="sF" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="#EDE3E3"/><stop offset=".6" stop-color="#BFA6A8"/><stop offset="1" stop-color="#6E5A5C"/></radialGradient>
+          <radialGradient id="sPol" cx="35%" cy="28%" r="75%"><stop offset="0" stop-color="#FFFFFB" stop-opacity=".95"/><stop offset=".55" stop-color="#D6D9D2" stop-opacity=".9"/><stop offset="1" stop-color="#8E968F" stop-opacity=".9"/></radialGradient>
+          <radialGradient id="sPus" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#F4E58A"/><stop offset=".6" stop-color="#C8B33A"/><stop offset="1" stop-color="#7C7A1C"/></radialGradient>
+          <radialGradient id="sVig" cx="50%" cy="50%" r="50%"><stop offset=".72" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".85"/></radialGradient>
+          <linearGradient id="sMetal" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E9EEF2"/><stop offset=".5" stop-color="#7E8A94"/><stop offset="1" stop-color="#D3DAE0"/></linearGradient>
+          <clipPath id="sClip"><circle cx="200" cy="200" r="178"/></clipPath>
+          <filter id="sBlur"><feGaussianBlur stdDeviation="3"/></filter>
+          <filter id="sTex" x="0" y="0" width="100%" height="100%">
+            <feTurbulence type="fractalNoise" baseFrequency=".6" numOctaves="3" seed="3" result="n"/>
+            <feColorMatrix in="n" type="matrix" values="0 0 0 0 .35  0 0 0 0 0  0 0 0 0 .05  0 0 0 .35 0" result="d"/>
+            <feComposite in="d" in2="SourceGraphic" operator="in" result="s"/>
+            <feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="s"/></feMerge>
+          </filter>
+        </defs>
+        <g clip-path="url(#sClip)">
+          <rect width="400" height="400" fill="url(#sDeep)"/>
+          <!-- concha média (profunda) -->
+          <ellipse class="muc" cx="272" cy="150" rx="58" ry="38" filter="url(#sTex)"/>
+          <ellipse cx="272" cy="150" rx="58" ry="38" fill="#000" opacity=".35"/>
+          <!-- septo -->
+          <path class="muc" d="M0,0 L118,0 C150,100 156,300 124,400 L0,400 Z" filter="url(#sTex)"/>
+          <g stroke="#A0142A" stroke-width="1.2" fill="none" opacity=".45">
+            <path d="M60,220 C80,230 90,250 110,252 M70,260 C85,268 96,282 118,284 M50,240 C65,245 72,262 84,270"/>
+          </g>
+          <ellipse cx="70" cy="140" rx="26" ry="70" fill="#fff" opacity=".18" filter="url(#sBlur)"/>
+          <!-- concha inferior -->
+          <g class="ti">
+            <ellipse class="muc" cx="300" cy="300" rx="122" ry="82" filter="url(#sTex)"/>
+            <ellipse cx="262" cy="262" rx="46" ry="16" fill="#fff" opacity=".28" filter="url(#sBlur)" transform="rotate(-18 262 262)"/>
+            <ellipse cx="300" cy="300" rx="122" ry="82" fill="none" stroke="#000" stroke-opacity=".25" stroke-width="6"/>
+          </g>
+          <!-- secreção hialina -->
+          <g class="layer hyal">
+            <path d="M178,170 C176,210 182,240 176,290 C174,320 178,350 176,400" stroke="#E8F2FF" stroke-opacity=".75" stroke-width="7" fill="none" stroke-linecap="round"/>
+            <path d="M178,170 C176,210 182,240 176,290" stroke="#fff" stroke-opacity=".9" stroke-width="2" fill="none"/>
+            <ellipse cx="196" cy="372" rx="16" ry="8" fill="#E8F2FF" opacity=".7"/>
+          </g>
+          <!-- secreção purulenta -->
+          <g class="layer pus">
+            <path d="M190,196 C210,190 240,196 250,214 C236,222 214,224 196,218 C186,212 184,202 190,196 Z" fill="url(#sPus)"/>
+            <path d="M200,218 C196,250 204,280 196,320 C192,350 198,380 194,400" stroke="#CDB53E" stroke-width="10" fill="none" stroke-linecap="round"/>
+            <ellipse cx="206" cy="200" rx="12" ry="4" fill="#fff" opacity=".45"/>
+          </g>
+          <!-- pólipos -->
+          <g class="layer polyp" stroke="#7D857E" stroke-width=".8">
+            <ellipse cx="196" cy="214" rx="30" ry="24" fill="url(#sPol)"/>
+            <ellipse cx="220" cy="246" rx="26" ry="22" fill="url(#sPol)"/>
+            <ellipse cx="186" cy="254" rx="20" ry="18" fill="url(#sPol)"/>
+            <ellipse cx="206" cy="282" rx="16" ry="14" fill="url(#sPol)"/>
+            <path d="M184,206 C194,212 204,210 212,220 M210,240 C220,244 226,252 232,250" stroke="#B4646E" stroke-width=".9" fill="none" opacity=".6"/>
+            <ellipse cx="188" cy="205" rx="9" ry="5" fill="#fff" opacity=".7" stroke="none"/>
+          </g>
+          <!-- escara necrótica -->
+          <g class="layer eschar">
+            <path d="M246,268 C262,252 300,256 318,272 C336,288 330,316 306,322 C284,330 256,320 248,302 C240,290 238,278 246,268 Z" fill="#141010"/>
+            <path d="M246,268 C262,252 300,256 318,272 C336,288 330,316 306,322 C284,330 256,320 248,302 C240,290 238,278 246,268 Z" fill="none" stroke="#5A2D22" stroke-width="5" opacity=".9"/>
+            <path d="M270,280 C280,286 292,284 300,292" stroke="#2E2420" stroke-width="2" fill="none"/>
+          </g>
+          <rect width="400" height="400" fill="url(#sVig)"/>
+        </g>
+        <circle cx="200" cy="200" r="184" fill="none" stroke="url(#sMetal)" stroke-width="12"/>
+      </svg>
+      <div class="plate-cap"><span>Fossa nasal direita · septo à esquerda</span><span id="scopeCap"></span></div>
+    </div>
+    <div class="panel" aria-live="polite">
+      <span class="k">Achado</span>
+      <div class="big" id="scTitle"></div>
+      <p id="scText"></p>
+      <p class="key" id="scKey"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FÁCIES ================= -->
+<section id="facies">
+  <div class="sec-head">
+    <span class="eyebrow">04 · Inspeção</span>
+    <h2>Fácies alérgica</h2>
+    <p class="lede">Os estigmas que a banca descreve no enunciado de uma criança com rinite alérgica persistente. Ligue e desligue cada um.</p>
+  </div>
+  <div class="grid2">
+    <div class="plate">
+      <svg id="faciesSvg" viewBox="0 0 400 320" role="img" aria-label="Ilustração dos sinais da fácies alérgica">
+        <defs>
+          <radialGradient id="fSkin" cx="50%" cy="45%" r="70%"><stop offset="0" stop-color="#E9BE9C"/><stop offset=".7" stop-color="#C98F6C"/><stop offset="1" stop-color="#8E5E43"/></radialGradient>
+          <radialGradient id="fShadow"><stop offset="0" stop-color="#4B2A3F" stop-opacity=".75"/><stop offset="1" stop-color="#4B2A3F" stop-opacity="0"/></radialGradient>
+          <radialGradient id="fIris" cx="45%" cy="40%" r="60%"><stop offset="0" stop-color="#8A5A2E"/><stop offset="1" stop-color="#3A220E"/></radialGradient>
+          <linearGradient id="fNose" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#000" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".18"/><stop offset="1" stop-color="#000" stop-opacity="0"/></linearGradient>
+          <filter id="fBlur"><feGaussianBlur stdDeviation="5"/></filter>
+          <filter id="fTex" x="0" y="0" width="100%" height="100%">
+            <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="11" result="n"/>
+            <feColorMatrix in="n" type="matrix" values="0 0 0 0 .3  0 0 0 0 .15  0 0 0 0 .1  0 0 0 .18 0" result="d"/>
+            <feComposite in="d" in2="SourceGraphic" operator="in" result="s"/>
+            <feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="s"/></feMerge>
+          </filter>
+        </defs>
+        <rect x="10" y="10" width="380" height="300" rx="16" fill="url(#fSkin)" filter="url(#fTex)"/>
+        <!-- sobrancelhas -->
+        <path d="M78,72 C108,56 150,58 178,74" stroke="#4A2E1E" stroke-width="7" fill="none" stroke-linecap="round" opacity=".85"/>
+        <path d="M322,72 C292,56 250,58 222,74" stroke="#4A2E1E" stroke-width="7" fill="none" stroke-linecap="round" opacity=".85"/>
+        <!-- olheiras -->
+        <g class="sign" data-sign="1">
+          <ellipse cx="130" cy="134" rx="52" ry="16" fill="url(#fShadow)" filter="url(#fBlur)"/>
+          <ellipse cx="270" cy="134" rx="52" ry="16" fill="url(#fShadow)" filter="url(#fBlur)"/>
+        </g>
+        <!-- olhos -->
+        <g>
+          <path d="M84,110 Q130,80 176,110 Q130,134 84,110 Z" fill="#F6F1EC"/>
+          <circle cx="130" cy="108" r="17" fill="url(#fIris)"/><circle cx="130" cy="108" r="7" fill="#0C0705"/><circle cx="125" cy="103" r="3.5" fill="#fff" opacity=".9"/>
+          <path d="M84,110 Q130,80 176,110" stroke="#2C1A10" stroke-width="3" fill="none"/>
+          <path d="M84,110 Q130,134 176,110" stroke="#7A4E36" stroke-width="1.5" fill="none"/>
+          <path d="M316,110 Q270,80 224,110 Q270,134 316,110 Z" fill="#F6F1EC"/>
+          <circle cx="270" cy="108" r="17" fill="url(#fIris)"/><circle cx="270" cy="108" r="7" fill="#0C0705"/><circle cx="265" cy="103" r="3.5" fill="#fff" opacity=".9"/>
+          <path d="M316,110 Q270,80 224,110" stroke="#2C1A10" stroke-width="3" fill="none"/>
+          <path d="M316,110 Q270,134 224,110" stroke="#7A4E36" stroke-width="1.5" fill="none"/>
+        </g>
+        <!-- Dennie-Morgan -->
+        <g class="sign" data-sign="2" stroke="#6A3B2A" stroke-width="1.8" fill="none" stroke-linecap="round">
+          <path d="M96,124 Q130,140 164,124"/><path d="M102,131 Q130,146 158,131"/>
+          <path d="M304,124 Q270,140 236,124"/><path d="M298,131 Q270,146 242,131"/>
+        </g>
+        <!-- nariz -->
+        <path d="M188,96 C186,140 176,180 166,204" stroke="#9A6448" stroke-width="2" fill="none"/>
+        <path d="M212,96 C214,140 224,180 234,204" stroke="#9A6448" stroke-width="2" fill="none"/>
+        <rect x="186" y="96" width="28" height="110" fill="url(#fNose)"/>
+        <path d="M160,206 C168,232 232,232 240,206" stroke="#8E5A3E" stroke-width="2.5" fill="none"/>
+        <ellipse cx="184" cy="218" rx="11" ry="6" fill="#3A1E14"/><ellipse cx="216" cy="218" rx="11" ry="6" fill="#3A1E14"/>
+        <!-- prega nasal transversa -->
+        <g class="sign" data-sign="3">
+          <path d="M178,180 Q200,188 222,180" stroke="#6A3B2A" stroke-width="2.4" fill="none"/>
+          <path d="M178,183 Q200,191 222,183" stroke="#F1CDB0" stroke-width="1.2" fill="none" opacity=".8"/>
+        </g>
+        <!-- boca -->
+        <path class="mouth-closed" d="M160,272 Q200,262 240,272 Q200,284 160,272 Z" fill="#9C4E4A"/>
+        <g class="sign" data-sign="4">
+          <path d="M162,266 Q200,252 238,266 Q200,302 162,266 Z" fill="#3A1414"/>
+          <path d="M172,264 Q200,256 228,264 L228,268 Q200,262 172,268 Z" fill="#F4EEE6"/>
+          <path d="M162,266 Q200,252 238,266 Q200,302 162,266 Z" fill="none" stroke="#8E4440" stroke-width="3"/>
+        </g>
+        <!-- marcadores numéricos -->
+        <g font-family="IBM Plex Mono, monospace" font-size="12" text-anchor="middle">
+          <g><circle cx="58" cy="146" r="11" fill="#0D1319"/><text x="58" y="150" fill="#DCE5EC">1</text></g>
+          <g><circle cx="342" cy="142" r="11" fill="#0D1319"/><text x="342" y="146" fill="#DCE5EC">2</text></g>
+          <g><circle cx="252" cy="182" r="11" fill="#0D1319"/><text x="252" y="186" fill="#DCE5EC">3</text></g>
+          <g><circle cx="262" cy="282" r="11" fill="#0D1319"/><text x="262" y="286" fill="#DCE5EC">4</text></g>
+        </g>
+      </svg>
+      <div class="plate-cap"><span>Criança, rinite alérgica persistente</span></div>
+    </div>
+    <div class="panel">
+      <span class="k">Sinais (toque para mostrar)</span>
+      <div class="signlist" id="signList">
+        <button data-sign="1" aria-pressed="true"><span class="n">1</span><span><b>Olheiras alérgicas.</b> Estase venosa periorbitária por congestão nasal crônica.</span></button>
+        <button data-sign="2" aria-pressed="true"><span class="n">2</span><span><b>Linhas de Dennie-Morgan.</b> Pregas duplas na pálpebra inferior, comuns na atopia.</span></button>
+        <button data-sign="3" aria-pressed="true"><span class="n">3</span><span><b>Prega nasal transversa.</b> Resultado da "saudação alérgica", o gesto de esfregar a ponta do nariz para cima.</span></button>
+        <button data-sign="4" aria-pressed="true"><span class="n">4</span><span><b>Respiração oral.</b> Na obstrução crônica, pode levar a palato ogival, má oclusão e face alongada (fácies adenoideana quando há hipertrofia de adenoide).</span></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ARIA ================= -->
+<section id="aria">
+  <div class="sec-head">
+    <span class="eyebrow">05 · Classificação e tratamento</span>
+    <h2>ARIA na prática</h2>
+    <p class="lede">Duração separa intermitente de persistente. Impacto separa leve de moderada/grave. Responda e a conduta acende.</p>
+  </div>
+  <div class="grid2">
+    <div class="panel">
+      <fieldset><legend>Frequência</legend>
+        <label class="opt"><input type="radio" name="freq" value="lt" id="fq1"> Menos de 4 dias por semana</label>
+        <label class="opt"><input type="radio" name="freq" value="ge" id="fq2" checked> 4 ou mais dias por semana</label>
+      </fieldset>
+      <fieldset><legend>Duração</legend>
+        <label class="opt"><input type="radio" name="dur" value="lt" id="du1"> Menos de 4 semanas seguidas</label>
+        <label class="opt"><input type="radio" name="dur" value="ge" id="du2" checked> 4 semanas ou mais</label>
+      </fieldset>
+      <fieldset><legend>Algum destes?</legend>
+        <label class="opt"><input type="checkbox" class="imp" id="im1" checked> Altera o sono</label>
+        <label class="opt"><input type="checkbox" class="imp" id="im2"> Prejudica escola ou trabalho</label>
+        <label class="opt"><input type="checkbox" class="imp" id="im3"> Limita lazer ou esporte</label>
+        <label class="opt"><input type="checkbox" class="imp" id="im4"> Sintomas incômodos</label>
+      </fieldset>
+    </div>
+    <div class="panel" aria-live="polite">
+      <span class="k">Classificação</span>
+      <div class="big" id="ariaOut"></div>
+      <div class="matrix" id="ariaMx">
+        <div class="h"></div><div class="h">Leve</div><div class="h">Moderada/grave</div>
+        <div class="h" style="border-top:1px solid var(--line)">Intermitente</div><div data-c="i-l">Anti-H1 oral ou nasal</div><div data-c="i-g">Anti-H1 ou corticoide nasal</div>
+        <div class="h" style="border-top:1px solid var(--line)">Persistente</div><div data-c="p-l">Anti-H1 ou corticoide nasal</div><div data-c="p-g">Corticoide nasal (1ª linha)</div>
+      </div>
+      <span class="k">Escada terapêutica</span>
+      <ul class="ladder" id="ariaLadder">
+        <li data-l="0"><b>Base para todos:</b> controle ambiental (ácaros, mofo, pelos, fumaça) e lavagem nasal com soro.</li>
+        <li data-l="1"><b>Anti-H1 de 2ª geração</b> (loratadina, desloratadina, fexofenadina, bilastina) ou anti-H1 nasal.</li>
+        <li data-l="2"><b>Corticoide intranasal</b> (mometasona, fluticasona, budesonida). Droga mais eficaz; efeito pleno em dias, uso contínuo.</li>
+        <li data-l="3"><b>Sem controle:</b> associar anti-H1 nasal ao corticoide (azelastina + fluticasona). Montelucaste se houver asma associada.</li>
+        <li data-l="4"><b>Imunoterapia alérgeno-específica</b> se alérgeno confirmado e resposta ruim. Única que modifica a história natural.</li>
+      </ul>
+      <p class="note">Descongestionante tópico só por poucos dias (cerca de 5): mais que isso gera rinite medicamentosa por rebote.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= AGUDA ================= -->
+<section id="aguda">
+  <div class="sec-head">
+    <span class="eyebrow">06 · Rinossinusite aguda</span>
+    <h2>Viral ou bacteriana? Pergunte à curva</h2>
+    <p class="lede">O que define o tratamento é o desenho da evolução no tempo. Escolha um padrão e arraste o dia.</p>
+  </div>
+  <div class="grid2">
+    <div class="plate">
+      <div class="seg" role="group" aria-label="Padrão evolutivo" id="tlSeg" style="margin-bottom:10px">
+        <button data-v="viral" aria-pressed="false">Resfriado</button>
+        <button data-v="persistente" aria-pressed="false">Persistente</button>
+        <button data-v="dupla" aria-pressed="true">Dupla piora</button>
+        <button data-v="grave" aria-pressed="false">Início grave</button>
+      </div>
+      <svg id="tl" viewBox="0 0 640 280" role="img" aria-label="Curva de intensidade dos sintomas ao longo dos dias">
+        <defs>
+          <linearGradient id="tlArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF8FA3" stop-opacity=".35"/><stop offset="1" stop-color="#FF8FA3" stop-opacity="0"/></linearGradient>
+        </defs>
+        <g id="tlGrid"></g>
+        <rect id="tlFever" x="0" y="30" width="0" height="14" fill="#E0A84A" opacity="0"/>
+        <text id="tlFeverT" x="0" y="25" opacity="0" style="fill:#E0A84A">febre ≥ 39 °C + secreção purulenta</text>
+        <path id="tlAreaPath" class="area" d=""/>
+        <path id="tlCurve" class="curve" d=""/>
+        <line id="tlCursor" x1="0" y1="30" x2="0" y2="230" stroke="#DCE5EC" stroke-width="1" stroke-dasharray="3 3"/>
+        <circle id="tlDot" r="7" fill="#0D1319" stroke="#FFD36E" stroke-width="3"/>
+      </svg>
+      <div style="padding:6px 6px 0;display:grid;gap:6px">
+        <div class="dayrow"><span>Dia de sintomas</span><b id="tlDay">8</b></div>
+        <input type="range" id="tlRange" min="0" max="21" step="1" value="8" aria-label="Dia de sintomas">
+      </div>
+    </div>
+    <div class="panel" aria-live="polite">
+      <span class="k">Leitura no dia selecionado</span>
+      <div class="big" id="tlTitle"></div>
+      <p id="tlText"></p>
+      <div class="alarm" id="tlRx"></div>
+      <p class="note">EPOS 2020 chama de pós-viral a piora após o 5º dia ou persistência após o 10º; só uma minoria é bacteriana (sugerem: secreção descolorida, dor local intensa, febre &gt; 38 °C, VHS/PCR elevados, dupla piora). Para prova, os gatilhos de antibiótico são os da IDSA: &gt; 10 dias sem melhora, início grave ou dupla piora.</p>
+    </div>
+  </div>
+  <div class="cmp">
+    <div class="panel">
+      <h3>Diagnóstico</h3>
+      <ul class="clean">
+        <li>≥ 2 sintomas, sendo um <b>obstrução</b> ou <b>rinorreia</b> (anterior ou posterior); os outros: dor/pressão facial, hiposmia.</li>
+        <li>Clínico. Raio-X não é indicado.</li>
+        <li>TC só se suspeita de complicação, quadro crônico ou planejamento cirúrgico.</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3>Antibiótico (quando indicado)</h3>
+      <ul class="clean">
+        <li><b>Amoxicilina</b> ou <b>amoxicilina-clavulanato</b> (IDSA prefere a associação).</li>
+        <li>Adulto 5–7 dias; criança 10–14 dias.</li>
+        <li>Alergia: doxiciclina ou quinolona respiratória.</li>
+        <li>Macrolídeo e SMX-TMP não: resistência alta do pneumococo.</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3>Agentes</h3>
+      <ul class="clean">
+        <li>Viral na imensa maioria: rinovírus, coronavírus, influenza.</li>
+        <li>Bacteriana: <i>S. pneumoniae</i>, <i>H. influenzae</i>, <i>M. catarrhalis</i>.</li>
+        <li>Odontogênica: unilateral, fétida, anaeróbios.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CHANDLER ================= -->
+<section id="chandler">
+  <div class="sec-head">
+    <span class="eyebrow">07 · Complicações</span>
+    <h2>Chandler, estágio por estágio</h2>
+    <p class="lede">Corte axial da órbita direita. O etmoide fica medial e só a fina lâmina papirácea o separa da órbita, por isso a complicação orbitária é a mais comum, sobretudo em crianças.</p>
+  </div>
+  <div class="grid2">
+    <div class="plate">
+      <div class="stepper" id="chSteps" role="group" aria-label="Estágio de Chandler">
+        <button data-v="1" aria-pressed="true"><b>I</b>Pré-septal</button>
+        <button data-v="2" aria-pressed="false"><b>II</b>Celulite orbitária</button>
+        <button data-v="3" aria-pressed="false"><b>III</b>Subperiosteal</button>
+        <button data-v="4" aria-pressed="false"><b>IV</b>Abscesso orbitário</button>
+        <button data-v="5" aria-pressed="false"><b>V</b>Seio cavernoso</button>
+      </div>
+      <svg id="orb" viewBox="0 0 520 400" data-st="1" role="img" aria-label="Corte axial da órbita com o estágio selecionado">
+        <defs>
+          <linearGradient id="oBone" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#CDBFA4"/><stop offset="1" stop-color="#EDE4D3"/></linearGradient>
+          <radialGradient id="oFat" cx="50%" cy="45%" r="70%"><stop offset="0" stop-color="#E8C77A"/><stop offset="1" stop-color="#A88640"/></radialGradient>
+          <radialGradient id="oGlobe" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".75" stop-color="#E3E7EC"/><stop offset="1" stop-color="#A9B1BB"/></radialGradient>
+          <radialGradient id="oInf" cx="50%" cy="50%" r="55%"><stop offset="0" stop-color="#F0263F" stop-opacity=".85"/><stop offset="1" stop-color="#F0263F" stop-opacity="0"/></radialGradient>
+          <radialGradient id="oPus" cx="40%" cy="40%" r="65%"><stop offset="0" stop-color="#F5E39A"/><stop offset=".6" stop-color="#D2A93A"/><stop offset="1" stop-color="#9B1B2C"/></radialGradient>
+          <linearGradient id="oMus" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#C2475A"/><stop offset="1" stop-color="#7E2030"/></linearGradient>
+          <filter id="oBlur"><feGaussianBlur stdDeviation="6"/></filter>
+          <clipPath id="oCone"><path d="M178,82 L398,100 L272,322 L250,322 Z"/></clipPath>
+        </defs>
+        <text x="20" y="22">ANTERIOR ↑</text><text x="20" y="390">MEDIAL ←</text><text x="420" y="390">→ LATERAL</text>
+        <!-- septo nasal e etmoide -->
+        <rect x="28" y="60" width="16" height="280" rx="6" fill="#D88A96" opacity=".75"/>
+        <path d="M60,70 L172,78 L244,322 L60,322 Z" fill="#141B22"/>
+        <g fill="none" stroke="#B3A486" stroke-width="2">
+          <rect x="70" y="86" width="38" height="40" rx="6"/><rect x="112" y="88" width="44" height="42" rx="6"/>
+          <rect x="70" y="132" width="44" height="46" rx="6"/><rect x="118" y="136" width="46" height="44" rx="6"/>
+          <rect x="72" y="184" width="50" height="46" rx="6"/><rect x="126" y="186" width="54" height="48" rx="6"/>
+          <rect x="76" y="238" width="60" height="42" rx="6"/><rect x="140" y="240" width="62" height="44" rx="6"/>
+        </g>
+        <text x="80" y="306">células etmoidais</text>
+        <!-- osso orbitário -->
+        <path d="M172,78 L250,326" stroke="url(#oBone)" stroke-width="7" fill="none" stroke-linecap="round"/>
+        <path d="M404,96 L276,326" stroke="url(#oBone)" stroke-width="12" fill="none" stroke-linecap="round"/>
+        <text x="122" y="64">lâmina papirácea</text>
+        <!-- gordura orbitária -->
+        <path d="M178,82 L398,100 L272,322 L250,322 Z" fill="url(#oFat)" opacity=".9"/>
+        <!-- periórbita -->
+        <path d="M181,92 L252,318" stroke="#E9E2D5" stroke-width="1.5" stroke-dasharray="5 3" fill="none"/>
+        <!-- músculos -->
+        <path d="M196,150 C214,210 236,270 254,312 L262,310 C246,262 226,206 212,148 Z" fill="url(#oMus)"/>
+        <path d="M368,152 C342,214 300,272 274,312 L268,308 C292,266 330,210 354,150 Z" fill="url(#oMus)"/>
+        <!-- estágio II: infecção difusa -->
+        <g class="st" data-on="2,3,4"><g clip-path="url(#oCone)"><ellipse cx="282" cy="200" rx="130" ry="110" fill="url(#oInf)"/></g></g>
+        <!-- estágio III: subperiosteal -->
+        <path class="st" data-on="3" d="M184,98 C206,120 222,170 218,214 C216,230 210,236 204,232 C196,190 188,140 184,98 Z" fill="url(#oPus)" stroke="#9B1B2C" stroke-width="1.5"/>
+        <!-- estágio IV: abscesso intraconal -->
+        <path class="st" data-on="4" d="M296,196 C316,186 340,196 338,220 C336,246 308,256 290,242 C276,232 278,204 296,196 Z" fill="url(#oPus)" stroke="#9B1B2C" stroke-width="1.5"/>
+        <!-- nervo óptico e globo -->
+        <g class="globe">
+          <path d="M282,176 C278,230 268,280 262,322" stroke="#F1EADC" stroke-width="14" fill="none" stroke-linecap="round"/>
+          <path d="M282,176 C278,230 268,280 262,322" stroke="#C9BFA8" stroke-width="2" fill="none"/>
+          <circle cx="290" cy="120" r="62" fill="url(#oGlobe)"/>
+          <path d="M252,72 Q290,44 328,72" fill="#CFE6F2" opacity=".7"/>
+          <ellipse cx="290" cy="66" rx="24" ry="6" fill="#3B5D78"/>
+          <circle cx="290" cy="120" r="62" fill="none" stroke="#8E98A3" stroke-width="1.2"/>
+        </g>
+        <!-- septo orbitário e pálpebra -->
+        <path d="M176,80 C220,46 360,52 402,96" stroke="#F3EEE6" stroke-width="1.8" stroke-dasharray="6 4" fill="none"/>
+        <path d="M160,60 C210,14 370,20 420,76 L410,84 C364,38 214,32 172,70 Z" fill="#D9A58A"/>
+        <g class="st" data-on="1,2"><path d="M150,58 C206,4 376,10 432,74 L414,90 C364,36 214,28 168,74 Z" fill="url(#oInf)" filter="url(#oBlur)"/></g>
+        <text x="410" y="40">pálpebra</text><text x="410" y="56">septo orbitário (- -)</text>
+        <!-- seio cavernoso -->
+        <ellipse cx="262" cy="350" rx="70" ry="18" fill="#2B3540"/>
+        <ellipse class="st" data-on="5" cx="262" cy="350" rx="76" ry="22" fill="url(#oInf)"/>
+        <path class="st" data-on="5" d="M300,150 C330,220 300,300 268,340" stroke="#F0263F" stroke-width="3" fill="none" stroke-dasharray="6 5"/>
+        <text x="342" y="354">seio cavernoso</text>
+      </svg>
+    </div>
+    <div class="panel" aria-live="polite">
+      <span class="k" id="chK">Estágio I</span>
+      <div class="big" id="chTitle"></div>
+      <p id="chText"></p>
+      <div class="flags" id="chFlags">
+        <span class="flag" data-f="edema">Edema palpebral</span>
+        <span class="flag" data-f="proptose">Proptose</span>
+        <span class="flag" data-f="dor">Dor à movimentação ocular</span>
+        <span class="flag" data-f="oftalmo">Oftalmoplegia / diplopia</span>
+        <span class="flag" data-f="visao">Queda da acuidade visual</span>
+        <span class="flag" data-f="bilat">Sinais bilaterais</span>
+      </div>
+      <div class="alarm"><b>Conduta.</b> <span id="chRx"></span></div>
+      <p class="note">Seio frontal → intracranianas (meningite, abscesso epidural/subdural/cerebral) e <b>Pott's puffy tumor</b> (osteomielite frontal com abscesso subperiosteal na fronte).</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CRÔNICA ================= -->
+<section id="cronica">
+  <div class="sec-head">
+    <span class="eyebrow">08 · Rinossinusite crônica</span>
+    <h2>Doze semanas mudam tudo</h2>
+    <p class="lede">Sintomas por 12 semanas ou mais, confirmados por endoscopia ou TC. A divisão clássica é pela presença de pólipos, que reflete o tipo de inflamação.</p>
+  </div>
+  <div class="cmp">
+    <div class="panel">
+      <span class="tag">Sem pólipos</span>
+      <h3>RSCsPN</h3>
+      <dl class="kv">
+        <dt>Inflamação</dt><dd>Mais frequentemente não tipo 2 (neutrofílica)</dd>
+        <dt>Clínica</dt><dd>Obstrução, rinorreia posterior, dor/pressão facial mais proeminente</dd>
+        <dt>Tratar</dt><dd>Lavagem com alto volume + corticoide tópico contínuo; cirurgia endoscópica se falha</dd>
+      </dl>
+    </div>
+    <div class="panel">
+      <span class="tag">Com pólipos</span>
+      <h3>RSCcPN</h3>
+      <dl class="kv">
+        <dt>Inflamação</dt><dd>Tipo 2, eosinofílica, ligada à asma</dd>
+        <dt>Clínica</dt><dd>Obstrução e <b>hiposmia/anosmia</b> dominam; pólipos bilaterais no meato médio</dd>
+        <dt>Tratar</dt><dd>Corticoide tópico; ciclos curtos de oral; cirurgia; biológicos (dupilumabe, omalizumabe, mepolizumabe) na doença grave refratária</dd>
+      </dl>
+    </div>
+    <div class="panel">
+      <span class="tag">DREA</span>
+      <h3>Tríade de Samter</h3>
+      <dl class="kv">
+        <dt>Tríade</dt><dd>Asma + polipose nasal + reação a AAS/AINE</dd>
+        <dt>Mecanismo</dt><dd>Inibição da COX-1 desvia para leucotrienos</dd>
+        <dt>Pista</dt><dd>Adulto com asma grave que piora com ibuprofeno e perdeu o olfato</dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CASOS ================= -->
+<section id="casos">
+  <div class="sec-head">
+    <span class="eyebrow">09 · Treino</span>
+    <h2>Casos clínicos</h2>
+    <p class="score" id="caseScore">0 de 5 respondidos</p>
+  </div>
+  <div class="cases" id="cases"></div>
+</section>
+
+<!-- ================= PEGADINHAS ================= -->
+<section id="pegadinhas">
+  <div class="sec-head">
+    <span class="eyebrow">10 · Revisão rápida</span>
+    <h2>Pegadinhas de prova</h2>
+    <p class="lede">Tente responder antes de abrir.</p>
+  </div>
+  <div class="traps">
+    <details><summary>Pólipo nasal unilateral?</summary><p>Investigar neoplasia, principalmente papiloma invertido (que pode malignizar). Pólipo antrocoanal também é unilateral. Biópsia e TC.</p></details>
+    <details><summary>Pólipo nasal em criança?</summary><p>Pensar em fibrose cística: solicitar teste do suor.</p></details>
+    <details><summary>Quando o seio frontal aparece?</summary><p>Radiologicamente visível por volta dos 7–8 anos, completo na adolescência. Maxilar e etmoide existem ao nascer; por isso sinusite etmoidal é a típica da criança pequena.</p></details>
+    <details><summary>Secreção amarelo-esverdeada fecha bacteriana?</summary><p>Não. A cor reflete neutrófilos e também ocorre no resfriado viral. O que define é o padrão temporal.</p></details>
+    <details><summary>Bola fúngica no maxilar: antifúngico?</summary><p>Não. Bola fúngica (geralmente Aspergillus, imunocompetente) é tratada com remoção cirúrgica endoscópica.</p></details>
+    <details><summary>Diabético em cetoacidose com crosta negra na concha?</summary><p>Mucormicose rino-orbito-cerebral. Emergência: anfotericina B lipossomal, desbridamento cirúrgico amplo e correção da cetoacidose.</p></details>
+    <details><summary>Spray descongestionante há meses e nariz "sempre entupido"?</summary><p>Rinite medicamentosa por rebote. Suspender o vasoconstritor e cobrir com corticoide intranasal.</p></details>
+    <details><summary>Rinite que surge na gestação?</summary><p>Rinite gestacional: aparece no 2º ou 3º trimestre, sem causa alérgica, e some até cerca de 2 semanas após o parto.</p></details>
+    <details><summary>Eosinofilia no esfregaço, mas prick test negativo?</summary><p>NARES (rinite não alérgica com eosinofilia). Responde bem a corticoide nasal.</p></details>
+    <details><summary>Sinusite maxilar unilateral fétida?</summary><p>Origem odontogênica (pré-molares e molares superiores). Cobrir anaeróbios e tratar o dente.</p></details>
+  </div>
+</section>
+
+<footer>
+  <b style="font-family:var(--f-display);color:var(--ink)">Fontes</b>
+  <ol>
+    <li>Fokkens WJ et al. European Position Paper on Rhinosinusitis and Nasal Polyps 2020 (EPOS 2020). <i>Rhinology</i>. 2020;58(Suppl S29):1–464.</li>
+    <li>Bousquet J et al. Next-generation ARIA care pathways for rhinitis and asthma. <i>J Allergy Clin Immunol</i>. 2020;145(1):70–80.</li>
+    <li>Sakano E et al. IV Consenso Brasileiro sobre Rinites (ASBAI, ABORL-CCF, SBP). 2017.</li>
+    <li>Chow AW et al. IDSA Clinical Practice Guideline for Acute Bacterial Rhinosinusitis in Children and Adults. <i>Clin Infect Dis</i>. 2012;54(8):e72–e112.</li>
+    <li>Rosenfeld RM et al. Clinical Practice Guideline (Update): Adult Sinusitis. <i>Otolaryngol Head Neck Surg</i>. 2015;152(2 Suppl):S1–S39.</li>
+    <li>Chandler JR, Langenbrunner DJ, Stevens ER. The pathogenesis of orbital complications in acute sinusitis. <i>Laryngoscope</i>. 1970;80(9):1414–1428.</li>
+  </ol>
+  <p>Ilustrações esquemáticas desenhadas para fins didáticos; proporções simplificadas. Material de estudo, não substitui avaliação clínica.</p>
+</footer>
+</div>
+
+<script>
+(function(){
+  const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
+  function seg(id,cb){const g=$(id);g.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;g.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));cb(b.dataset.v)});}
+
+  /* ---------- ANATOMIA ---------- */
+  const STATES={
+    normal:["Normal","Seios aerados, mucosa rósea e conchas de volume habitual. O ciclo nasal alterna a congestão entre as fossas a cada poucas horas, por isso obstrução leve e alternante é fisiológica."],
+    alergica:["Rinite alérgica","Mucosa pálida e azulada, conchas inferiores edemaciadas e rinorreia hialina. Os seios seguem aerados: a doença é da mucosa nasal. Reação IgE imediata (espirros, prurido, coriza) seguida de fase tardia com obstrução."],
+    aguda:["Rinossinusite aguda","Mucosa hiperemiada, edema que fecha o complexo ostiomeatal, secreção purulenta escorrendo do meato médio e nível hidroaéreo no maxilar. Ostium bloqueado, ar reabsorvido, secreção estagnada: meio ideal para bactérias."],
+    cronica:["Crônica com pólipos","Espessamento mucoso difuso, etmoide opacificado e pólipos bilaterais saindo do meato médio. Obstrução e perda do olfato dominam o quadro."]
+  };
+  const INFO={
+    conchaMed:["Concha média e meato médio","Embaixo dela fica o meato médio, onde drenam frontal, maxilar e etmoide anterior. Essa encruzilhada é o complexo ostiomeatal: um edema pequeno aqui obstrui vários seios ao mesmo tempo.","Prova: é o alvo da cirurgia endoscópica funcional e o lugar onde nascem os pólipos."],
+    conchaInf:["Concha inferior","Maior concha e principal responsável pela resistência ao fluxo aéreo. No meato inferior desemboca o ducto nasolacrimal.","Rinite alérgica: concha inferior pálida e hipertrofiada é o achado clássico da rinoscopia anterior."],
+    conchaSup:["Concha superior","No meato superior drenam as células etmoidais posteriores. Acima, no recesso esfenoetmoidal, drena o esfenoide. A região olfatória fica no teto da fossa.","Edema alto ou pólipos explicam a hiposmia."],
+    septo:["Septo nasal","Cartilagem quadrangular anteriormente, lâmina perpendicular do etmoide e vômer posteriormente. Na porção anterior fica a área de Little (plexo de Kiesselbach).","Desvio septal causa obstrução fixa e unilateral, ao contrário da rinite, que é bilateral e flutuante."],
+    maxilar:["Seio maxilar","Presente ao nascer e o mais acometido no adulto. O óstio fica no alto da parede medial, então a drenagem depende do batimento ciliar, contra a gravidade.","Unilateral e fétido: lembrar origem odontogênica (raízes de pré-molares e molares superiores)."],
+    etmoide:["Células etmoidais","Presentes ao nascer: é o seio da sinusite da criança pequena. Anteriores drenam no meato médio; posteriores, no meato superior.","Separadas da órbita só pela lâmina papirácea: origem das complicações orbitárias."],
+    frontal:["Seio frontal","Ausente ao nascer; visível no raio-X por volta dos 7–8 anos e completo na adolescência. Drena pelo recesso frontal ao meato médio.","Complicações intracranianas e Pott's puffy tumor (osteomielite frontal com tumefação na fronte)."],
+    esfenoide:["Seio esfenoidal","Posterior, drena no recesso esfenoetmoidal. Vizinho do nervo óptico, da carótida interna e do seio cavernoso.","Cefaleia em vértice ou occipital; sinusite isolada aqui pode ter complicações graves e sintomas pobres."],
+    orbita:["Órbita","A parede medial (lâmina papirácea) é finíssima e tem deiscências; as veias oftálmicas não têm válvulas. Infecção passa do etmoide para a órbita e daí ao seio cavernoso.","Edema palpebral numa sinusite de criança: separar pré-septal de orbitária (proptose, dor à movimentação, diplopia)."]
+  };
+  const anat=$('#anat');
+  function setState(v){anat.dataset.state=v;$('#stTitle').textContent=STATES[v][0];$('#stText').textContent=STATES[v][1];}
+  function setInfo(k){anat.querySelectorAll('.hit').forEach(h=>h.classList.toggle('sel',h.dataset.key===k));const i=INFO[k];$('#inTitle').textContent=i[0];$('#inText').textContent=i[1];$('#inExam').textContent=i[2];}
+  seg('#anatSeg',setState);
+  anat.querySelectorAll('.hit').forEach(h=>{h.addEventListener('click',()=>setInfo(h.dataset.key));h.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();setInfo(h.dataset.key)}})});
+  $('#lblToggle').addEventListener('change',e=>anat.classList.toggle('nolabels',!e.target.checked));
+  setState('normal');setInfo('conchaMed');
+
+  /* ---------- SINTOMAS ---------- */
+  const DX=["Rinite alérgica","Resfriado viral","Rinossinusite bacteriana","Rinossinusite crônica"];
+  const SYM=[
+    ["Prurido nasal ou ocular",[3,0,0,0],true],["Espirros em salva",[3,1,0,0],true],["Rinorreia hialina",[2,2,0,0],true],
+    ["Obstrução nasal",[1,1,1,2],false],["Olhos lacrimejando",[2,1,0,0],false],["Gatilho: poeira, pelos, pólen",[3,0,0,0],true],
+    ["Dor de garganta e mal-estar no início",[0,3,0,0],false],["Febre baixa",[0,2,1,0],false],["Dor ou pressão facial",[0,1,2,2],false],
+    ["Hiposmia ou anosmia",[0,1,1,3],false],["Secreção purulenta / pós-nasal espessa",[0,1,2,2],false],["Mais de 10 dias sem melhora",[0,0,4,0],false],
+    ["Dupla piora",[0,0,5,0],false],["Febre ≥ 39 °C com secreção purulenta",[0,0,4,0],false],["Sintomas há 12 semanas ou mais",[1,0,0,5],false]
+  ];
+  const WHY=[
+    "Prurido, espirros em salva e coriza clara com gatilho ambiental são a assinatura da fase imediata IgE. Febre e dor facial falam contra.",
+    "Início com garganta e mal-estar, coriza clara que espessa e melhora em menos de 10 dias. Sintomático e lavagem nasal.",
+    "Quem decide é o tempo: mais de 10 dias sem melhora, dupla piora ou início grave. Cor da secreção sozinha não basta.",
+    "Doze semanas ou mais com obstrução, rinorreia posterior, dor facial ou hiposmia. Confirmar com endoscopia ou TC e procurar pólipos."
+  ];
+  const chips=$('#symChips');
+  SYM.forEach((s,i)=>{const b=document.createElement('button');b.className='chip';b.type='button';b.textContent=s[0];b.dataset.i=i;b.setAttribute('aria-pressed',s[2]?'true':'false');chips.appendChild(b)});
+  const bars=$('#symBars');
+  DX.forEach(d=>{bars.insertAdjacentHTML('beforeend',`<div class="bar"><div class="row"><span>${d}</span><span>0%</span></div><div class="track"><div class="fill" style="width:0%"></div></div></div>`)});
+  function scoreSym(){const t=[0,0,0,0];chips.querySelectorAll('[aria-pressed="true"]').forEach(b=>SYM[b.dataset.i][1].forEach((v,j)=>t[j]+=v));
+    const sum=t.reduce((a,b)=>a+b,0);const mx=Math.max(...t);const top=t.indexOf(mx);
+    bars.querySelectorAll('.bar').forEach((el,j)=>{const p=sum?Math.round(t[j]/sum*100):0;el.querySelector('.fill').style.width=p+'%';el.querySelector('.row span:last-child').textContent=p+'%';el.classList.toggle('top',sum>0&&j===top)});
+    $('#symTop').textContent=sum?DX[top]:'Marque algum achado';$('#symWhy').textContent=sum?WHY[top]:'';}
+  chips.addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')==='true'?'false':'true');scoreSym()});
+  $('#symClear').addEventListener('click',()=>{chips.querySelectorAll('.chip').forEach(b=>b.setAttribute('aria-pressed','false'));scoreSym()});
+  scoreSym();
+
+  /* ---------- RINOSCOPIA ---------- */
+  const SC={
+    normal:["Mucosa normal","Rósea, úmida, brilhante. Conchas de volume habitual, meato livre, sem secreção.","Referência para comparar todo o resto.","rósea"],
+    alergica:["Rinite alérgica","Mucosa pálida, acinzentada ou azulada, edemaciada, com concha inferior hipertrofiada e secreção hialina abundante.","Chave: palidez + edema + coriza clara. Pode haver prega nasal transversa e olheiras.","pálida / azulada"],
+    viral:["Resfriado (rinite infecciosa)","Mucosa hiperemiada e edemaciada, coriza inicialmente clara que pode espessar e mudar de cor nos dias seguintes.","Cor da secreção sozinha não indica bactéria.","hiperemiada"],
+    bacteriana:["Rinossinusite bacteriana","Mucosa hiperemiada com secreção mucopurulenta drenando do meato médio, escorrendo pelo assoalho e para a rinofaringe.","Pus no meato médio aponta para seios anteriores (maxilar, frontal, etmoide anterior).","hiperemiada + pus"],
+    medicamentosa:["Rinite medicamentosa","Mucosa vermelho-viva, edematosa, conchas muito aumentadas e pouca resposta ao vasoconstritor.","História de spray descongestionante usado por semanas. Tratar: suspender e usar corticoide nasal.","vermelho-viva"],
+    polipose:["Polipose nasal","Massas lisas, acinzentadas e translúcidas, móveis e indolores ao toque, saindo do meato médio. Diferente da concha, que é sensível e encolhe com vasoconstritor.","Bilateral: RSC com pólipos, pensar em asma e DREA. Unilateral: investigar neoplasia.","massa translúcida"],
+    fungica:["Rinossinusite fúngica invasiva","Mucosa pálida e isquêmica com crosta ou escara negra na concha ou no septo. Pouca dor no local necrótico.","Diabético em cetoacidose, neutropênico ou transplantado: mucormicose. Emergência cirúrgica + anfotericina B lipossomal.","escara negra"]
+  };
+  const scope=$('#scope');
+  function setScope(v){scope.dataset.s=v;const s=SC[v];$('#scTitle').textContent=s[0];$('#scText').textContent=s[1];$('#scKey').textContent=s[2];$('#scopeCap').textContent='Mucosa: '+s[3];}
+  seg('#scopeSeg',setScope);setScope('alergica');
+
+  /* ---------- FÁCIES ---------- */
+  const fsvg=$('#faciesSvg');
+  function syncSigns(){$$('#signList button').forEach(b=>{const on=b.getAttribute('aria-pressed')==='true';fsvg.querySelectorAll(`.sign[data-sign="${b.dataset.sign}"]`).forEach(g=>g.classList.toggle('on',on));if(b.dataset.sign==='4')fsvg.classList.toggle('oral',on);});}
+  $('#signList').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')==='true'?'false':'true');syncSigns()});
+  // mouth closed toggle via class on svg
+  const mc=fsvg.querySelector('.mouth-closed');
+  const obs=()=>{mc.style.opacity=fsvg.classList.contains('oral')?0:1};
+  new MutationObserver(obs).observe(fsvg,{attributes:true,attributeFilter:['class']});
+  syncSigns();obs();
+
+  /* ---------- ARIA ---------- */
+  function aria(){const freq=document.querySelector('input[name=freq]:checked').value,dur=document.querySelector('input[name=dur]:checked').value;
+    const pers=freq==='ge'&&dur==='ge';const grave=$$('.imp').some(i=>i.checked);
+    const cls=(pers?'Persistente':'Intermitente')+' '+(grave?'moderada/grave':'leve');$('#ariaOut').textContent=cls;
+    const key=(pers?'p':'i')+'-'+(grave?'g':'l');$$('#ariaMx [data-c]').forEach(c=>c.classList.toggle('on',c.dataset.c===key));
+    const lv={'i-l':[0,1],'i-g':[0,1,2],'p-l':[0,1,2],'p-g':[0,2,3,4]}[key];
+    $$('#ariaLadder li').forEach(li=>li.classList.toggle('hl',lv.includes(+li.dataset.l)));}
+  $$('#aria input').forEach(i=>i.addEventListener('change',aria));aria();
+
+  /* ---------- TIMELINE ---------- */
+  const X0=50,X1=620,Y0=230,Y1=40,DMAX=21;const sx=d=>X0+(X1-X0)*d/DMAX, sy=v=>Y0-(Y0-Y1)*v/10;
+  const grid=$('#tlGrid');let gh='';
+  for(let d=0;d<=21;d+=1){const x=sx(d);const major=d%5===0;gh+=`<line x1="${x}" y1="${Y1}" x2="${x}" y2="${Y0}" stroke="#24303B" stroke-width="${major?1:.4}"/>`;if(major)gh+=`<text x="${x}" y="${Y0+18}" text-anchor="middle">${d}</text>`;}
+  gh+=`<line x1="${X0}" y1="${Y0}" x2="${X1}" y2="${Y0}" stroke="#7F8D9A"/>`;
+  [[5,'5º dia'],[10,'10º dia']].forEach(([d,t])=>{gh+=`<line x1="${sx(d)}" y1="${Y1-6}" x2="${sx(d)}" y2="${Y0}" stroke="#FFD36E" stroke-dasharray="4 4" stroke-width="1.2"/><text x="${sx(d)+5}" y="${Y0-6}" style="fill:#FFD36E">${t}</text>`});
+  gh+=`<text x="${X0-8}" y="${sy(10)+4}" text-anchor="end">10</text><text x="${X0-8}" y="${sy(5)+4}" text-anchor="end">5</text><text x="${X0-8}" y="${Y0+4}" text-anchor="end">0</text><text x="${X1}" y="${Y0+34}" text-anchor="end">dias</text><text x="${X0}" y="${Y1-14}">intensidade dos sintomas</text>`;
+  grid.innerHTML=gh;
+  const PAT={
+    viral:[[0,1],[1,5],[2.5,8],[4,7],[6,4],[8,2],[10,.8],[12,.3],[16,0],[21,0]],
+    persistente:[[0,1],[1,5],[3,7.5],[5,7],[7,6.8],[10,6.8],[14,6.6],[17,6.4],[21,6.2]],
+    dupla:[[0,1],[1,5],[3,8],[5,5],[6.5,3],[8,6],[10,8.5],[13,8.6],[17,8],[21,7.6]],
+    grave:[[0,2],[1,8.6],[2,9.6],[3,9.8],[4,9.6],[6,9.2],[9,8.8],[14,8],[21,7.5]]
+  };
+  const MSG={
+    viral:d=>d<5?["Resfriado em pico","Sintomas no auge entre o 2º e o 3º dia. Padrão viral típico.","Sintomáticos, lavagem nasal com soro, hidratação. Sem antibiótico."]:d<10?["Melhora progressiva","A curva desce de forma contínua. Continua viral.","Sem antibiótico. Orientar retorno se piorar de novo ou passar de 10 dias sem melhora."]:["Resolvido","Quadro viral típico dura menos de 10 dias.","Nada a fazer além de orientação."],
+    persistente:d=>d<10?["Ainda na janela viral","Sintomas persistentes, mas antes de 10 dias não há critério de bacteriana.","Sintomáticos, corticoide nasal e lavagem. Reavaliar no 10º dia."]:["Mais de 10 dias sem melhora","Critério IDSA de rinossinusite bacteriana: persistência sem qualquer melhora após 10 dias.","Amoxicilina ou amoxicilina-clavulanato (adulto 5–7 dias). Observação vigiada é opção no adulto com retorno garantido (AAO-HNS 2015)."],
+    dupla:d=>d<5?["Começo igual ao resfriado","Nada distingue ainda de um quadro viral.","Sintomáticos e lavagem nasal."]:d<8?["Melhorando","Os sintomas recuam. Seria só um resfriado, se a curva continuasse descendo.","Orientar retorno se voltar a piorar."]:["Dupla piora","Melhora inicial seguida de nova piora (febre, dor facial, secreção). Critério de bacteriana, mesmo antes de 10 dias.","Antibiótico: amoxicilina-clavulanato. Reavaliar em 48–72 h; se sem resposta, trocar esquema e pensar em complicação."],
+    grave:d=>d<3?["Início explosivo","Febre alta com secreção purulenta ou dor facial desde o primeiro dia. Acompanhar até completar 3–4 dias.","Se mantiver o padrão grave por 3–4 dias seguidos, não esperar 10 dias."]:["Início grave","Febre ≥ 39 °C com secreção purulenta ou dor facial por 3–4 dias consecutivos no começo do quadro.","Antibiótico já: amoxicilina-clavulanato. Procurar sinais de complicação (olho, fronte, rigidez de nuca)."]
+  };
+  function interp(pts,d){for(let i=0;i<pts.length-1;i++){const[a,b]=[pts[i],pts[i+1]];if(d>=a[0]&&d<=b[0]){const t=(d-a[0])/(b[0]-a[0]);const s=t*t*(3-2*t);return a[1]+(b[1]-a[1])*s}}return pts[pts.length-1][1]}
+  function smooth(pts){const P=pts.map(p=>[sx(p[0]),sy(p[1])]);let d=`M${P[0][0]},${P[0][1]}`;for(let i=0;i<P.length-1;i++){const p0=P[i-1]||P[i],p1=P[i],p2=P[i+1],p3=P[i+2]||p2;d+=` C${p1[0]+(p2[0]-p0[0])/6},${p1[1]+(p2[1]-p0[1])/6} ${p2[0]-(p3[0]-p1[0])/6},${p2[1]-(p3[1]-p1[1])/6} ${p2[0]},${p2[1]}`}return d}
+  let pat='dupla';
+  function drawTl(){const pts=PAT[pat];const d=smooth(pts);$('#tlCurve').setAttribute('d',d);$('#tlAreaPath').setAttribute('d',d+` L${sx(21)},${Y0} L${sx(0)},${Y0} Z`);
+    const f=$('#tlFever'),ft=$('#tlFeverT');if(pat==='grave'){f.setAttribute('x',sx(0));f.setAttribute('width',sx(4)-sx(0));f.setAttribute('opacity',.85);f.setAttribute('y',Y1-24);f.setAttribute('height',8);ft.setAttribute('x',sx(4)+8);ft.setAttribute('y',Y1-16);ft.setAttribute('opacity',1)}else{f.setAttribute('opacity',0);ft.setAttribute('opacity',0)}
+    updDay();}
+  function updDay(){const d=+$('#tlRange').value;$('#tlDay').textContent=d;const v=interp(PAT[pat],d);const x=sx(d),y=sy(v);$('#tlDot').setAttribute('cx',x);$('#tlDot').setAttribute('cy',y);$('#tlCursor').setAttribute('x1',x);$('#tlCursor').setAttribute('x2',x);
+    const m=MSG[pat](d);$('#tlTitle').textContent=m[0];$('#tlText').textContent=m[1];$('#tlRx').innerHTML='<b>Conduta.</b> '+m[2];}
+  seg('#tlSeg',v=>{pat=v;drawTl()});$('#tlRange').addEventListener('input',updDay);drawTl();
+
+  /* ---------- CHANDLER ---------- */
+  const CH={
+    1:["Celulite pré-septal","Inflamação restrita à pálpebra, à frente do septo orbitário. Acuidade visual, motilidade ocular e posição do globo normais. Sem proptose.","ATB oral (amoxicilina-clavulanato) e reavaliação em 24–48 h. Internar se criança pequena, toxemia, dúvida diagnóstica ou falha.",["edema"]],
+    2:["Celulite orbitária","Infecção atravessou o septo e se espalha pela gordura orbitária. Proptose, quemose, dor à movimentação ocular e restrição dos movimentos.","Internação, ATB EV, TC de órbitas e seios com contraste, avaliação oftalmológica seriada.",["edema","proptose","dor","oftalmo"]],
+    3:["Abscesso subperiosteal","Coleção entre a lâmina papirácea e a periórbita. Desloca o globo para fora e para baixo.","ATB EV. Drenagem cirúrgica (geralmente endoscópica) se perda visual, abscesso grande ou sem melhora em 24–48 h. Abscesso pequeno e medial em criança pode ser tratado clinicamente.",["edema","proptose","dor","oftalmo"]],
+    4:["Abscesso orbitário","Coleção purulenta dentro da gordura orbitária. Proptose acentuada, oftalmoplegia e alto risco de perda visual por neurite ou isquemia.","Drenagem cirúrgica + ATB EV. Emergência oftalmológica e otorrinolaringológica.",["edema","proptose","dor","oftalmo","visao"]],
+    5:["Trombose do seio cavernoso","Disseminação pelas veias oftálmicas sem válvulas. Sinais bilaterais, paralisia de III, IV e VI pares e de V1/V2, toxemia e rebaixamento.","ATB EV de amplo espectro, RM com contraste, considerar anticoagulação e tratar o foco. Alta mortalidade.",["edema","proptose","dor","oftalmo","visao","bilat"]]
+  };
+  const orb=$('#orb');const ROM=['','I','II','III','IV','V'];
+  function setCh(n){n=+n;orb.dataset.st=n;orb.querySelectorAll('.st').forEach(e=>{e.style.opacity=e.dataset.on.split(',').includes(String(n))?1:0});
+    const c=CH[n];$('#chK').textContent='Estágio '+ROM[n];$('#chTitle').textContent=c[0];$('#chText').textContent=c[1];$('#chRx').textContent=c[2];
+    $$('#chFlags .flag').forEach(f=>f.classList.toggle('on',c[3].includes(f.dataset.f)));}
+  seg('#chSteps',setCh);setCh(1);
+
+  /* ---------- CASOS ---------- */
+  const CASES=[
+    {s:"Menina de 9 anos com espirros em salva ao acordar, prurido nasal e coriza clara 5 dias por semana há 3 meses. Acorda à noite e tem faltado à escola. Rinoscopia: conchas inferiores pálidas e aumentadas.",o:["Intermitente leve: anti-H1 se necessário","Persistente leve: montelucaste isolado","Persistente moderada/grave: corticoide intranasal contínuo + controle ambiental","Persistente moderada/grave: descongestionante nasal contínuo"],a:2,e:"≥ 4 dias/semana por ≥ 4 semanas = persistente; sono e escola afetados = moderada/grave. Corticoide intranasal é a 1ª linha. Descongestionante contínuo causa rinite medicamentosa."},
+    {s:"Homem de 34 anos com coriza e obstrução há 8 dias. Melhorou bastante no 5º dia, mas desde ontem voltou a ter febre de 38,5 °C, dor maxilar e secreção espessa.",o:["Resfriado: sintomáticos","TC de seios para confirmar","Amoxicilina-clavulanato 5–7 dias","Azitromicina 3 dias"],a:2,e:"Melhora seguida de nova piora é a dupla piora, critério de bacteriana mesmo antes de 10 dias. Macrolídeo não é opção pela resistência do pneumococo. TC não é necessária sem suspeita de complicação."},
+    {s:"Menino de 6 anos com rinossinusite há 5 dias evolui com edema palpebral à direita, olho projetado para frente, dor ao mover o olho e visão dupla.",o:["Celulite pré-septal: ATB oral ambulatorial","Celulite orbitária ou abscesso: internação, ATB EV e TC com contraste","Conjuntivite: colírio antibiótico","Aguardar 48 h com anti-inflamatório"],a:1,e:"Proptose, dor à movimentação e diplopia indicam acometimento pós-septal (Chandler II ou mais). Origem típica: etmoide pela lâmina papirácea. TC define se há abscesso subperiosteal."},
+    {s:"Mulher de 42 anos com asma de difícil controle, obstrução nasal e perda de olfato há 1 ano. Teve crise grave de broncoespasmo após tomar ibuprofeno. Endoscopia: pólipos bilaterais.",o:["Rinite alérgica perene","Fibrose cística","Doença respiratória exacerbada por AINE (tríade de Samter)","Papiloma invertido"],a:2,e:"Asma + polipose nasal + reação a AAS/AINE. Inflamação tipo 2 com desvio para leucotrienos. Pólipos bilaterais em adulto afastam papiloma (unilateral) e a idade afasta FC."},
+    {s:"Homem de 58 anos, diabético, internado em cetoacidose, refere dor facial e edema periorbitário. Na rinoscopia há crosta negra sobre a concha inferior.",o:["Rinossinusite bacteriana: amoxicilina-clavulanato","Bola fúngica: cirurgia eletiva","Mucormicose: anfotericina B lipossomal + desbridamento cirúrgico urgente","Rinite medicamentosa"],a:2,e:"Escara negra em diabético descompensado é mucormicose rino-orbito-cerebral. Emergência: antifúngico EV, desbridamento amplo e correção metabólica. Bola fúngica ocorre em imunocompetente e não invade."}
+  ];
+  const wrap=$('#cases');let done=0,right=0;const L='ABCD';
+  CASES.forEach((c,ci)=>{const el=document.createElement('div');el.className='case';
+    el.innerHTML=`<span class="k">Caso ${ci+1}</span><p class="stem">${c.s}</p><div class="answers">${c.o.map((o,i)=>`<button type="button" data-i="${i}"><span class="l">${L[i]}</span><span>${o}</span></button>`).join('')}</div><p class="expl" hidden>${c.e}</p>`;
+    el.querySelector('.answers').addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b.disabled)return;const i=+b.dataset.i;
+      el.querySelectorAll('.answers button').forEach(x=>{x.disabled=true;if(+x.dataset.i===c.a)x.classList.add('right')});if(i!==c.a)b.classList.add('wrong');else right++;done++;
+      el.querySelector('.expl').hidden=false;$('#caseScore').textContent=`${done} de ${CASES.length} respondidos · ${right} acerto${right===1?'':'s'}`;});
+    wrap.appendChild(el)});
+})();
+</script>
+
+</body>
+</html>
