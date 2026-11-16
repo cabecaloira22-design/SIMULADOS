@@ -8,3 +8,4 @@ Site: https://cabecaloira22-design.github.io/SIMULADOS/
 - `ham-adulto/` — Simulado HAM Adulto (geriatria, gastro, parasitologia, hepatites e guia OSCE, 4º período), 88 questões.
 - `soi-8p/` — Simulado SOI (digestório, rins e vias urinárias, obstetrícia; 8º período), 230 questões.
 - `atlas-rinossinusal/` — Atlas interativo de rinite e rinossinusite (anatomia, rinoscopia, ARIA, Chandler, casos clínicos).
+- `cirurgia-pericia/` — Simulado Clínica Cirúrgica + Perícia Médica (8º período), 25 temas selecionáveis e 200 questões (100 de cada), com mini-aula completa por questão, leitor das aulas, placar ao vivo e modos estudo e prova.
