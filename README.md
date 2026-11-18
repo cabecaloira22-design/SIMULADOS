@@ -9,3 +9,4 @@ Site: https://cabecaloira22-design.github.io/SIMULADOS/
 - `soi-8p/` — Simulado SOI (digestório, rins e vias urinárias, obstetrícia; 8º período), 230 questões.
 - `atlas-rinossinusal/` — Atlas interativo de rinite e rinossinusite (anatomia, rinoscopia, ARIA, Chandler, casos clínicos).
 - `cirurgia-pericia/` — Simulado Clínica Cirúrgica + Perícia Médica (8º período), 25 temas selecionáveis e 200 questões (100 de cada), com mini-aula completa por questão, leitor das aulas, placar ao vivo e modos estudo e prova.
+- `integracao-curricular-8p/` — Integração Curricular VIII (8º período): resumo completo dos 10 casos clínicos, 150 questões (15 por caso) com gabarito comentado e tabelas finais de pontos a não esquecer.
