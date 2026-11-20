@@ -10,3 +10,4 @@ Site: https://cabecaloira22-design.github.io/SIMULADOS/
 - `atlas-rinossinusal/` — Atlas interativo de rinite e rinossinusite (anatomia, rinoscopia, ARIA, Chandler, casos clínicos).
 - `cirurgia-pericia/` — Simulado Clínica Cirúrgica + Perícia Médica (8º período), 25 temas selecionáveis e 200 questões (100 de cada), com mini-aula completa por questão, leitor das aulas, placar ao vivo e modos estudo e prova.
 - `integracao-curricular-8p/` — Integração Curricular VIII (8º período): resumo completo dos 10 casos clínicos, 150 questões (15 por caso) com gabarito comentado e tabelas finais de pontos a não esquecer.
+- `ham-iesc-sem15-17/` — Simulado HAM Ped, HAM Adulto e IESC (semanas 15–17), 9 temas e 135 questões (15 por tema), com mini-aula completa, recorte da página do PDF com o trecho da resposta destacado, figuras e esquemas, placar ao vivo e modos estudo e prova.
